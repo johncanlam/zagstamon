@@ -162,6 +162,8 @@ class ZabbixServer(GenericServer):
         services = []
         groupids = []
         zabbix_triggers = []
+        api_version = self.zapi.api_version()
+        self.Debug(api_version)
         try:
             response = []
             try:
@@ -206,7 +208,10 @@ class ZabbixServer(GenericServer):
                     service = e.result.content
                     ret = e.result
             for service in services:
-                state = '%s=%s' % (service['items'][0]['key_'], service['items'][0]['lastvalue'])
+                if api_version > '1.8':
+                    state = '%s' % service['description']
+                else:
+                    state = '%s=%s' % (service['items'][0]['key_'], service['items'][0]['lastvalue'])
                 n = {
                     'host': service['host'],
                     'service': service['description'],
