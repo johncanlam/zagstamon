@@ -47,9 +47,9 @@ class Config(object):
         self.connect_by_dns = False
         self.connect_by_ip = False
         self.debug_mode = False
-        self.debug_to_file = False
+        self.debug_to_file = True
         self.debug_file = os.path.expanduser('~') + os.sep + "nagstamon.log"
-        self.check_for_new_version = True
+        self.check_for_new_version = False
         self.notification = True
         self.notification_flashing = True
         # because of nonexistent windows systray popup support I'll let it be now

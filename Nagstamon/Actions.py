@@ -98,6 +98,7 @@ class RefreshLoopOneServer(threading.Thread):
                     gobject.idle_add(self.output.popwin.UpdateStatus, self.server)
                     # get current status
                     server_status = self.server.GetStatus(output=self.output)
+                    #self.server.Debug(dir(server_status))
                     # GTK/Pango does not like tag brackets < and >, so clean them out from description
                     server_status.error = server_status.error.replace("<", "").replace(">", "").replace("\n", " ")
                     # debug
@@ -154,8 +155,8 @@ class RefreshLoopOneServer(threading.Thread):
 def RefreshAllServers(servers=None, output=None, conf=None):
     """
     one refreshing action, starts threads, one per polled server
-    """    
-    for server in servers.values():        
+    """
+    for server in servers.values():
         # check if server is already checked
         if server.isChecking == False and str(conf.servers[server.get_name()].enabled) == "True":
             #debug

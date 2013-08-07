@@ -38,6 +38,10 @@ import sys
 import gc
 import time
 
+# from Server.Generic import Log
+
+# logger = Log()
+
 
 class Sorting(object):
     """ Sorting persistence purpose class

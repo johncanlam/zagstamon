@@ -13,6 +13,8 @@ import traceback
 import base64
 import re
 import gobject
+import logging
+from logging.handlers import RotatingFileHandler
 
 # to let Linux distributions use their own BeautifulSoup if existent try importing local BeautifulSoup first
 # see https://sourceforge.net/tracker/?func=detail&atid=1101370&aid=3302612&group_id=236865
@@ -1087,4 +1089,13 @@ class GenericServer(object):
         # give debug info to debug loop for thread-save log-file writing
         self.debug_queue.put(debug_string)
         
-    
+
+# def Log():
+#         logger = logging.getLogger()
+#         hdlr = RotatingFileHandler('/data/logs/nagstamon_debug.log', maxBytes=1024*1024*100, backupCount=5)
+#         formatter = logging.Formatter('%(asctime)s %(levelname)s %(module)s.%(funcName)s Line:%(lineno)d %(message)s')
+#         hdlr.setFormatter(formatter)
+#         logger.addHandler(hdlr)
+#         logger.setLevel(logging.DEBUG)
+#         return logger
+

@@ -114,6 +114,8 @@ class ZabbixServer(GenericServer):
                     return e.result
 
             for host in hosts:
+                # johncan
+                # self.Debug(str(host))
                 duration = int(time.time()) - int(host['errors_from'])
                 n = {
                     'host': host['host'],
@@ -163,7 +165,6 @@ class ZabbixServer(GenericServer):
         groupids = []
         zabbix_triggers = []
         api_version = self.zapi.api_version()
-        self.Debug(api_version)
         try:
             response = []
             try:
@@ -171,10 +172,16 @@ class ZabbixServer(GenericServer):
                 triggers_list = []
                 if self.monitor_cgi_url:
                     group_list = self.monitor_cgi_url.split(',')
+                    # johncan
+                    # self.Debug(str(group_list))
                     hostgroup_ids = [x['groupid'] for x in self.zapi.hostgroup.get(
                         {'output': 'extend',
                          'with_monitored_items': True,
                          'filter': {"name": group_list}}) if int(x['internal']) == 0]
+                    # johncan
+                    # self.Debug(str(hostgroup_ids))
+                    # johncan
+                    # hostgroup_ids = [7]
                     zabbix_triggers = self.zapi.trigger.get(
                         {'sortfield': 'lastchange', 'withUnacknowledgedEvents': True, 'groupids': hostgroup_ids,
                          "monitored": True, "filter": {'value': 1}})
@@ -192,6 +199,8 @@ class ZabbixServer(GenericServer):
                      'select_items': 'extend',
                      'expandData': True}
                 )
+                # johncan
+                # self.Debug(str(this_trigger))
                 if type(this_trigger) is dict:
                     for triggerid in this_trigger.keys():
                         services.append(this_trigger[triggerid])
@@ -208,10 +217,12 @@ class ZabbixServer(GenericServer):
                     service = e.result.content
                     ret = e.result
             for service in services:
+                # johncan
+                # self.Debug(str(service))
                 if api_version > '1.8':
                     state = '%s' % service['description']
                 else:
-                    state = '%s=%s' % (service['items'][0]['key_'], service['items'][0]['lastvalue'])
+                    state = '%s=%s' % (service['items'][0]['key_'], service['items'][0]['lastvalue']) 
                 n = {
                     'host': service['host'],
                     'service': service['description'],
